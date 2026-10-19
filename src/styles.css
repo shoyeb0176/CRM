@@ -1,0 +1,257 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Inuberry — Architectural Grid design system.
+ * Paper background, dark forest-green foreground, orange precision accent.
+ * Anton (display) · Inter (sans) · JetBrains Mono (mono).
+ * Fonts are loaded via <link> in src/routes/__root.tsx head().
+ */
+
+@theme {
+  --font-display: "Anton", "Bebas Neue", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0px; /* sharp corners — architectural grid */
+
+  /* Paper background, dark forest foreground, orange accent */
+  --background: oklch(0.972 0.012 145);
+  --foreground: oklch(0.235 0.035 165);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.235 0.035 165);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.235 0.035 165);
+  --primary: oklch(0.685 0.18 50); /* signal orange */
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.93 0.008 150);
+  --secondary-foreground: oklch(0.235 0.035 165);
+  --muted: oklch(0.93 0.008 150);
+  --muted-foreground: oklch(0.5 0.018 165);
+  --accent: oklch(0.92 0.012 150);
+  --accent-foreground: oklch(0.235 0.035 165);
+  --destructive: oklch(0.55 0.22 27);
+  --success: oklch(0.5 0.12 155);
+  --warning: oklch(0.58 0.15 65);
+  --info: oklch(0.52 0.1 235);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.235 0.035 165 / 0.12);
+  --input: oklch(0.235 0.035 165 / 0.28);
+  --ring: oklch(0.685 0.18 50);
+
+  --chart-1: oklch(0.685 0.18 50);
+  --chart-2: oklch(0.45 0.06 165);
+  --chart-3: oklch(0.6 0.08 165);
+  --chart-4: oklch(0.78 0.14 80);
+  --chart-5: oklch(0.35 0.04 165);
+
+  --sidebar: oklch(0.235 0.035 165);
+  --sidebar-foreground: oklch(0.97 0.008 150);
+  --sidebar-primary: oklch(0.685 0.18 50);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.3 0.035 165);
+  --sidebar-accent-foreground: oklch(0.97 0.008 150);
+  --sidebar-border: oklch(1 0 0 / 0.08);
+  --sidebar-ring: oklch(0.685 0.18 50);
+}
+
+.dark {
+  --background: oklch(0.18 0.025 165);
+  --foreground: oklch(0.96 0.008 150);
+  --card: oklch(0.22 0.03 165);
+  --card-foreground: oklch(0.96 0.008 150);
+  --popover: oklch(0.22 0.03 165);
+  --popover-foreground: oklch(0.96 0.008 150);
+  --primary: oklch(0.72 0.18 50);
+  --primary-foreground: oklch(0.18 0.025 165);
+  --secondary: oklch(0.27 0.03 165);
+  --secondary-foreground: oklch(0.96 0.008 150);
+  --muted: oklch(0.27 0.03 165);
+  --muted-foreground: oklch(0.72 0.02 165);
+  --accent: oklch(0.27 0.03 165);
+  --accent-foreground: oklch(0.96 0.008 150);
+  --destructive: oklch(0.65 0.22 27);
+  --success: oklch(0.75 0.13 155);
+  --warning: oklch(0.8 0.14 75);
+  --info: oklch(0.75 0.1 235);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(1 0 0 / 0.1);
+  --input: oklch(1 0 0 / 0.22);
+  /* Chart colours lightened for dark cards. */
+  --chart-2: oklch(0.72 0.1 165);
+  --chart-3: oklch(0.8 0.08 165);
+  --chart-5: oklch(0.62 0.04 165);
+  --ring: oklch(0.72 0.18 50);
+  --sidebar: oklch(0.14 0.02 165);
+  --sidebar-foreground: oklch(0.96 0.008 150);
+  --sidebar-primary: oklch(0.72 0.18 50);
+  --sidebar-primary-foreground: oklch(0.14 0.02 165);
+  --sidebar-accent: oklch(0.24 0.025 165);
+  --sidebar-accent-foreground: oklch(0.96 0.008 150);
+  --sidebar-border: oklch(1 0 0 / 0.08);
+  --sidebar-ring: oklch(0.72 0.18 50);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+    /* Thin, quiet scrollbars that blend with the page (the sidebar sets its own). */
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--color-foreground) 22%, transparent) transparent;
+  }
+  /* Grid items may shrink below their content, so a wide table or form inside a grid column scrolls in
+     its own box instead of widening the page. Utilities (min-w-*) still override this. */
+  .grid > * { min-width: 0; }
+  /* An open dialog turns off pointer events on the page; toasts (and their buttons) stay clickable. */
+  [data-sonner-toast] { pointer-events: auto; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: color-mix(in oklab, var(--color-foreground) 22%, transparent); }
+  ::-webkit-scrollbar-thumb:hover { background: color-mix(in oklab, var(--color-foreground) 40%, transparent); }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+  }
+  /* Anton only where asked for (large titles). Small headings use font-heading: Anton is a
+     single heavy weight and gets hard to read below ~20px. */
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+@utility font-heading {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+@utility font-mono {
+  font-family: var(--font-mono);
+}
+
+@keyframes inu-line-draw {
+  from { height: 0; }
+  to { height: 100%; }
+}
+@keyframes inu-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@utility animate-ledger-line {
+  animation: inu-line-draw 1.2s var(--ease-out-expo) both;
+}
+@utility animate-fade-up {
+  animation: inu-fade-up 0.8s var(--ease-out-expo) both;
+}
+/* Page-change bar: a short stripe sliding across under the top bar. It fades in after 100 ms,
+   so changes that finish instantly don't flash it. */
+@keyframes inu-nav-slide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(400%); }
+}
+@keyframes inu-nav-show {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@utility animate-nav-progress {
+  animation: inu-nav-slide 1s cubic-bezier(0.4, 0, 0.2, 1) infinite, inu-nav-show 0.15s 0.1s both;
+}
+
+/* Syntax colours for CodeBlock (highlight.js classes), from the brand: forest keys, orange numbers. */
+:root {
+  --code-key: oklch(0.4 0.08 165);
+  --code-string: oklch(0.47 0.12 145);
+  --code-number: oklch(0.55 0.17 45);
+  --code-keyword: oklch(0.5 0.17 25);
+}
+.dark {
+  --code-key: oklch(0.8 0.07 165);
+  --code-string: oklch(0.78 0.13 145);
+  --code-number: oklch(0.78 0.15 55);
+  --code-keyword: oklch(0.75 0.15 25);
+}
+.hljs-attr, .hljs-property, .hljs-variable, .hljs-section, .hljs-title { color: var(--code-key); }
+.hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition { color: var(--code-string); }
+.hljs-number, .hljs-literal, .hljs-type, .hljs-built_in { color: var(--code-number); }
+.hljs-keyword, .hljs-selector-tag, .hljs-meta, .hljs-deletion { color: var(--code-keyword); }
+.hljs-comment, .hljs-quote { color: var(--color-muted-foreground); font-style: italic; }
+
+/* Colour cues for actions, kept out of a layer so they apply over each button's own grey text.
+   Red = removes or deletes something; close (×) turns red on hover; a tick is green. Solid buttons
+   (red, primary, black) keep their own colours. Toasts get a coloured edge and icon by type. */
+:is(button, a, [role="button"], [role="menuitem"]):not([class*="bg-destructive"], [class*="bg-primary"], [class*="bg-foreground"]):has(> svg:is(.lucide-trash, .lucide-trash-2, .lucide-circle-x, .lucide-ban)) {
+  color: var(--destructive);
+}
+:is(button, a, [role="button"]):not([class*="bg-destructive"], [class*="bg-primary"], [class*="bg-foreground"]):is([aria-label^="Remove"], [aria-label^="Delete"]):has(> svg.lucide-x) {
+  color: var(--destructive);
+}
+:is(button, a, [role="button"], [role="menuitem"]):not([class*="bg-destructive"], [class*="bg-primary"], [class*="bg-foreground"]):has(> svg:is(.lucide-trash, .lucide-trash-2, .lucide-circle-x, .lucide-ban, .lucide-x)):is(:hover, :focus-visible):not(:disabled) {
+  color: var(--destructive);
+  background-color: color-mix(in oklch, var(--destructive) 10%, transparent);
+}
+:is(button, a, [role="button"]):not([class*="bg-destructive"], [class*="bg-primary"], [class*="bg-foreground"]) > svg:is(.lucide-check, .lucide-circle-check) {
+  color: var(--success);
+}
+[data-sonner-toast]:is([data-type="success"], [data-type="error"], [data-type="warning"], [data-type="info"]) { border-left-width: 4px; }
+[data-sonner-toast][data-type="success"] { border-left-color: var(--success); }
+[data-sonner-toast][data-type="error"] { border-left-color: var(--destructive); }
+[data-sonner-toast][data-type="warning"] { border-left-color: var(--warning); }
+[data-sonner-toast][data-type="info"] { border-left-color: var(--info); }
+[data-sonner-toast][data-type="success"] [data-icon] { color: var(--success); }
+[data-sonner-toast][data-type="error"] [data-icon] { color: var(--destructive); }
+[data-sonner-toast][data-type="warning"] [data-icon] { color: var(--warning); }
+[data-sonner-toast][data-type="info"] [data-icon] { color: var(--info); }

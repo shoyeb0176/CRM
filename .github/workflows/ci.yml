@@ -1,0 +1,72 @@
+# On every pull request and push to main: type check, unit tests, both builds, browser smoke tests,
+# and every database migration plus self-test on an empty Supabase Postgres.
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # The two production builds outgrow Node's default memory limit.
+      NODE_OPTIONS: --max-old-space-size=6144
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - name: Type check
+        run: bunx tsc --noEmit
+      - name: Design rules (square corners, theme colours, 12px text)
+        run: node scripts/check-design.mjs
+      - name: MCP tools stay inside their workspace
+        run: bun scripts/check-mcp-isolation.ts
+      - name: Unit tests
+        run: bun test
+      - name: Build (Lovable)
+        run: bun run build
+      - name: Build (Node / Docker)
+        run: bun run build:node
+      - name: Smoke test the Node build
+        run: |
+          PORT=3000 node .output/server/index.mjs &
+          for i in $(seq 1 30); do curl -sf http://localhost:3000/api/public/version && exit 0; sleep 1; done
+          exit 1
+      - name: Browser smoke tests
+        run: |
+          bunx playwright install --with-deps chromium
+          bunx playwright test --grep-invert @visual
+        env:
+          # Signed-in tests run only when these repository secrets exist (a test account, never a real one).
+          E2E_EMAIL: ${{ secrets.E2E_EMAIL }}
+          E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
+          # Repository variable: 1 also runs the money-flow tests, which save records (test workspace only).
+          E2E_WRITE: ${{ vars.E2E_WRITE }}
+      - name: Screenshot tests (public pages, in Playwright's Linux image so fonts match the references)
+        run: |
+          docker run --rm --network host -v "$PWD":/work -w /work -e E2E_BASE_URL=http://localhost:3000             mcr.microsoft.com/playwright:v1.63.0-noble npx playwright test --grep @visual
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  database:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: supabase/postgres:15.8.1.060
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres -h localhost"
+          --health-interval 5s --health-timeout 5s --health-retries 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Migrations and database self-tests
+        run: bash scripts/ci-dbtest.sh
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres

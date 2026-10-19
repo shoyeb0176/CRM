@@ -1,0 +1,15 @@
+---
+name: MCP server ("Connect your AI")
+description: Inuberry MCP server at /mcp — OAuth sign-in with a workspace picker, personal developer keys, 19 tools shared with the assistant's approval flow
+type: feature
+---
+Outside AI apps (Claude Code, Codex, opencode, ChatGPT, Claude.ai, Cursor…) connect to one workspace for one user at `https://crm.inuberry.com/mcp` (streamable HTTP). Public setup guide: `/developers/mcp` (`src/routes/developers.mcp.tsx`); in-app: Settings › Developer › Connect your AI.
+
+- **Route** `src/routes/mcp.ts` and `src/routes/[.well-known]/oauth-protected-resource.ts` are hand-owned; the mcp-js Vite plugin is not used (vite.config.ts). `Authorization: Bearer inbp_…` → personal key path; anything else → OAuth handler.
+- **mcp-js pitfalls (found live in v1.3.0/1.3.1):** `defineMcp` throws if `createAppContext` is set without `auth`, so `keyMcp()` hands the key's context to each tool instead (tools may only read `ctx.appContext`). Any error thrown in `createAppContext` becomes a 500, so the route checks disconnected apps / ex-members first (`oauthRefusal` in `personal-key.server.ts`) and answers 401 `invalid_token` with `WWW-Authenticate`, which makes clients offer to sign in again.
+- **OAuth:** Supabase Auth is the OAuth 2.1 server (dynamic client registration on). Consent page `src/routes/_authenticated/oauth.consent.tsx` (`/oauth/consent?authorization_id=…`): user picks the workspace → row in `mcp_connections(user_id, client_id, org_id, revoked_at)` → `supabase.auth.oauth.approveAuthorization`. Supabase's OAuth "authorization path" must be `/oauth/consent`. Context (`oauthContext` in `src/lib/mcp/context.ts`): user-scoped Supabase client (RLS) + workspace from mcp_connections (else current workspace); a revoked connection is refused.
+- **Personal keys:** `personal_api_keys` (hashed, expiry 30/90/365 days, created by `createPersonalKey` in `src/lib/api/developer.functions.ts`; users can only set `revoked_at`). Checked in `src/lib/mcp/personal-key.server.ts` with the **service role**, using the owner's current role in that workspace.
+- **Tools** (`src/lib/mcp/tools.ts`, one file): list_workspaces, search_customers, list_companies, list_contacts, list_leads, leads_summary, list_deals, list_invoices, get_invoice, list_products, low_stock, list_projects, list_project_tasks; writes create_lead, create_company, create_contact, create_task, log_activity → `proposeAction` (same queue and `ai_action_policies` as the in-app assistant; default waits in /app/ai/approvals); get_action_status.
+- **Rules for every tool:** filter by `ctx.appContext.orgId` (the key path bypasses RLS!) and call `requireAccess(ctx, module, write)` (role matrix in `src/lib/settings/role-matrix.ts`). Writes also check `org_is_active` (plan lock). Status filters use the exact Postgres enum values.
+- Manifest `.lovable/mcp/manifest.json` — regenerate with `npx lovable-mcp-extract-manifest` after changing tools.
+- Self-check: `scripts/selftest-ai-connections.sql` (migration 0036 / DB-16). Live-tested 11 Oct (v1.3.2) with a personal key, a manual OAuth client and real Claude Code (QA tracker MCP-001 – MCP-009).

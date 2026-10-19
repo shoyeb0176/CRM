@@ -1,0 +1,852 @@
+{
+  "version": 1,
+  "sdk_version": "3.0.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://zygoaiexmcbgvilyikdq.supabase.co/auth/v1",
+    "resource_documentation": "https://crm.inuberry.com/docs/mcp",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "inuberry-erp",
+      "version": "1.0.0",
+      "title": "Inuberry ERP"
+    },
+    "tools": [
+      {
+        "name": "inuberry_help",
+        "title": "How Inuberry works",
+        "description": "Answer questions about using Inuberry: where something is, how to do a task, plans and billing, AI approvals, notifications, connecting AI apps, self-hosting and updates. Returns the best matching guide passages with links. Use it before guessing how the app works.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "question": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 500,
+              "description": "The user's question, in their words"
+            }
+          },
+          "required": [
+            "question"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_workspaces",
+        "title": "Which workspace am I in?",
+        "description": "Show the Inuberry workspace this connection works in, your role there, and your other workspaces. To use another workspace, reconnect the app and pick it on the consent screen (or make a personal key for it).",
+        "inputSchema": null,
+        "outputSchema": null
+      },
+      {
+        "name": "search_customers",
+        "title": "Search customers",
+        "description": "Search companies and contacts by keyword (name, email, phone, website). Use it to turn names into ids before other calls.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Keyword"
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_companies",
+        "title": "List companies",
+        "description": "List customer companies, newest first; optional keyword on name or website.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "query": {
+              "description": "Keyword",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_contacts",
+        "title": "List contacts",
+        "description": "List contacts, newest first; filter by company or keyword.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "company_id": {
+              "description": "Only this company",
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "query": {
+              "description": "Keyword",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_leads",
+        "title": "List leads",
+        "description": "List sales leads, newest first; optional status or keyword.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "new",
+                "contacted",
+                "qualified",
+                "converted",
+                "unqualified",
+                "lost"
+              ]
+            },
+            "query": {
+              "description": "Keyword on name, email or company",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "leads_summary",
+        "title": "How many leads?",
+        "description": "Count leads in total and by status, with their total estimated value. Use this for 'how many leads do we have?'.",
+        "inputSchema": null,
+        "outputSchema": null
+      },
+      {
+        "name": "list_deals",
+        "title": "List deals",
+        "description": "List deals (pipeline), newest first; optional status or keyword on title.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "open",
+                "won",
+                "lost"
+              ]
+            },
+            "query": {
+              "type": "string"
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_quotes",
+        "title": "List quotes",
+        "description": "List quotes, newest first; optional status or customer company.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "sent",
+                "accepted",
+                "rejected",
+                "expired",
+                "converted"
+              ]
+            },
+            "company_id": {
+              "description": "Only this customer",
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_invoices",
+        "title": "List invoices",
+        "description": "List invoices, newest first; optional status or customer company.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "sent",
+                "partially_paid",
+                "paid",
+                "overdue",
+                "void"
+              ]
+            },
+            "company_id": {
+              "description": "Only this customer",
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_invoice",
+        "title": "Get invoice",
+        "description": "One invoice in full: line items, payments and customer.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "invoice_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            }
+          },
+          "required": [
+            "invoice_id"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_payments",
+        "title": "List payments",
+        "description": "Payments received in the last N days (default 30), newest first, with the invoice number, and their total.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "days": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 366
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_products",
+        "title": "List products",
+        "description": "List products and services; optional keyword on name or SKU.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string"
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "low_stock",
+        "title": "Low and out-of-stock products",
+        "description": "Tracked products that are out of stock or at/below their low-stock threshold (same rule as the dashboard and the daily alert).",
+        "inputSchema": null,
+        "outputSchema": null
+      },
+      {
+        "name": "list_projects",
+        "title": "List projects",
+        "description": "List projects, newest first; optional status.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "planned",
+                "active",
+                "on_hold",
+                "completed",
+                "cancelled"
+              ]
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_project_tasks",
+        "title": "List project tasks",
+        "description": "List tasks, optionally for one project or status.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "project_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "todo",
+                "in_progress",
+                "review",
+                "blocked",
+                "done",
+                "cancelled"
+              ]
+            },
+            "limit": {
+              "description": "Max results (default 25)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_agents",
+        "title": "List AI agents",
+        "description": "The workspace's AI agents: status, when they run (by hand, on a schedule, on an event) and their last run.",
+        "inputSchema": null,
+        "outputSchema": null
+      },
+      {
+        "name": "create_lead",
+        "title": "Create a lead",
+        "description": "Propose a new sales lead. Follows the workspace's AI approval policy (usually a person approves it in Inuberry first).",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "description": "Person or lead name"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            "phone": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "company_name": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "job_title": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "estimated_value": {
+              "type": "number",
+              "minimum": 0
+            },
+            "notes": {
+              "type": "string",
+              "maxLength": 4000
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_company",
+        "title": "Create a company",
+        "description": "Propose a new customer company (an existing company with the same name is reused). Follows the approval policy.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "industry": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "website": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "phone": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "city": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "country": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_contact",
+        "title": "Create a contact",
+        "description": "Propose a new contact, optionally at an existing company (company_id, or company_name of an existing company). Follows the approval policy.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "first_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "last_name": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            "phone": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "job_title": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "company_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "company_name": {
+              "type": "string",
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "first_name"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_task",
+        "title": "Create a project task",
+        "description": "Propose a task in a project (project_id, or the name of an existing project). Follows the approval policy.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "project_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "project_name": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "urgent"
+              ]
+            },
+            "due_date": {
+              "description": "YYYY-MM-DD",
+              "type": "string",
+              "format": "date",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+            }
+          },
+          "required": [
+            "title"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "log_activity",
+        "title": "Log an activity",
+        "description": "Propose a call, email, meeting or note on a company, contact, deal or lead. Follows the approval policy.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "entity_type": {
+              "type": "string",
+              "enum": [
+                "company",
+                "contact",
+                "deal",
+                "lead"
+              ]
+            },
+            "entity_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 4000
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "call",
+                "email",
+                "meeting",
+                "note",
+                "follow_up",
+                "task"
+              ]
+            }
+          },
+          "required": [
+            "entity_type",
+            "entity_id",
+            "title"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_agent",
+        "title": "Create an AI agent",
+        "description": "Propose an Inuberry AI agent that does a job by hand, on a schedule or when something happens. Ask the user what it should do, which data it may use, when it runs and what needs their OK first. Always waits for a person to approve it in Inuberry.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "instructions": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 8000,
+              "description": "What it does on every run, its rules and tone"
+            },
+            "modules": {
+              "maxItems": 12,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "enum": [
+                      "crm",
+                      "sales",
+                      "invoices",
+                      "payments",
+                      "inventory",
+                      "purchasing",
+                      "accounting",
+                      "projects",
+                      "hr",
+                      "reports"
+                    ]
+                  },
+                  "read": {
+                    "type": "boolean"
+                  },
+                  "create": {
+                    "type": "boolean"
+                  },
+                  "update": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "module"
+                ]
+              }
+            },
+            "tools": {
+              "maxItems": 20,
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Tool names, e.g. invoice_search, crm_list_deals, crm_add_note, task_create, notification_create, send_email, team_chat_post"
+            },
+            "triggers": {
+              "maxItems": 5,
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "manual"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "scheduled"
+                      },
+                      "config": {
+                        "type": "object",
+                        "properties": {
+                          "every": {
+                            "type": "string",
+                            "enum": [
+                              "hour",
+                              "day",
+                              "weekday",
+                              "week"
+                            ]
+                          },
+                          "at": {
+                            "description": "HH:MM",
+                            "type": "string"
+                          },
+                          "day": {
+                            "description": "0 = Sunday",
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 6
+                          },
+                          "tz": {
+                            "type": "string"
+                          },
+                          "prompt": {
+                            "type": "string",
+                            "maxLength": 2000
+                          }
+                        },
+                        "required": [
+                          "every"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "config"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "event_based"
+                      },
+                      "config": {
+                        "type": "object",
+                        "properties": {
+                          "event": {
+                            "type": "string",
+                            "description": "alert.invoice_overdue, alert.deal_stale, alert.low_stock, alert.task_overdue, crm.lead, forms.form, support.support_ticket, sales.quote_response, invoices.paid, hr.leave_request"
+                          },
+                          "prompt": {
+                            "type": "string",
+                            "maxLength": 2000
+                          }
+                        },
+                        "required": [
+                          "event"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "config"
+                    ]
+                  }
+                ]
+              }
+            },
+            "activate": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "name",
+            "instructions",
+            "modules",
+            "tools"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_action_status",
+        "title": "Check a proposed change",
+        "description": "Status of a change proposed by create_* or log_activity: pending, approved/executed (with the result), rejected or failed.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            }
+          },
+          "required": [
+            "action_id"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

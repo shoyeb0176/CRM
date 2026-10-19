@@ -1,0 +1,14 @@
+node_modules
+.output
+.nitro
+.tanstack
+.wrangler
+.git
+.claude
+.lovable
+.impeccable
+qa
+*.log
+.env
+.env.*
+!.env.example

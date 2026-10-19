@@ -1,0 +1,11 @@
+GRANT EXECUTE ON FUNCTION public.has_org_role(uuid, public.app_role[]) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.is_org_member(uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.has_permission(uuid, text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.has_hr_access(uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.is_platform_owner() TO authenticated;
+GRANT EXECUTE ON FUNCTION public.current_portal_user(uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.portal_user_company(uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.is_portal_user_of_company(uuid, uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.my_portal_orgs() TO authenticated;
+GRANT EXECUTE ON FUNCTION public.org_has_module(uuid, text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.org_within_user_limit(uuid) TO authenticated;

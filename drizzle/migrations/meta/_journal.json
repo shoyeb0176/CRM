@@ -1,0 +1,356 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789936899807,
+      "tag": "0000_ai_foundation_provider_registry",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789968994310,
+      "tag": "0001_ai_action_policies_and_approvals",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790008312750,
+      "tag": "0002_workspace_pages_blocks",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790009021443,
+      "tag": "0003_custom_databases",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1790009287724,
+      "tag": "0004_workflows_and_forms",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1790010055305,
+      "tag": "0005_developer_platform_api_keys_webhooks",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1790010351084,
+      "tag": "0006_knowledge_base_and_imports",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1790010794821,
+      "tag": "0007_comms_timeline",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1790011583266,
+      "tag": "0008_restore_policy_helper_execute_grants",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1790011960522,
+      "tag": "0009_organizations_creator_select",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1790011972149,
+      "tag": "0010_grant_seed_helpers_execute",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1790167102440,
+      "tag": "0011_org_default_subscription_trigger",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1790170625202,
+      "tag": "0012_profiles_email_and_seat_helpers",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1790175123595,
+      "tag": "0013_starter_default_and_optin_trial",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1790178689571,
+      "tag": "0014_p4_data_integrity",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1790184504982,
+      "tag": "0015_fix_doc_numbering_and_line_triggers",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1790187088236,
+      "tag": "0016_p4c_invoice_payments_fulfilment",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1790189898382,
+      "tag": "0017_p6_fulfilment_guard_and_doc_locks",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1790599112609,
+      "tag": "0018_migration_probe",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1790600198894,
+      "tag": "0019_security_membership_and_subscription_rls",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1790602527681,
+      "tag": "0020_0019_security_membership_and_subscription_rls",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1790606767836,
+      "tag": "0021_b4_ledger_and_audit_guards",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1790607248288,
+      "tag": "0022_0021_b4_ledger_and_audit_guards",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1790614320576,
+      "tag": "0023_profiles_visible_to_teammates",
+      "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1790615379031,
+      "tag": "0024_profiles_visible_to_teammates",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1791415502766,
+      "tag": "0025_0025_org_mail_settings",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1791415665380,
+      "tag": "0026_0026_billing_packages",
+      "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1791415826540,
+      "tag": "0027_0027_attachments",
+      "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1791421779873,
+      "tag": "0028_0028_platform_owner_read_orgs",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1791422826467,
+      "tag": "0029_apply_0029_plan_lock_errors",
+      "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1791509506321,
+      "tag": "0030_apply_0030_notifications",
+      "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1791510733666,
+      "tag": "0031_0031_apply_0031_ticket_notification_links",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1791511864697,
+      "tag": "0032_apply_0032_low_stock_includes_out_of_stock",
+      "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1791519328984,
+      "tag": "0033_0033_apply_0033_platform_owner_gets_owner_alerts",
+      "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1791523474729,
+      "tag": "0034_apply_0034_platform_owner_is_owner_of_own_workspace",
+      "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "7",
+      "when": 1791663258457,
+      "tag": "0035_apply_0035_portal_claim_invites",
+      "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1791669031691,
+      "tag": "0036_apply_0036_ai_connections",
+      "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "7",
+      "when": 1791944678089,
+      "tag": "0037_apply_0037_notifications_v2",
+      "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "7",
+      "when": 1791952689794,
+      "tag": "0038_apply_0038_summaries_and_modules",
+      "breakpoints": true
+    },
+    {
+      "idx": 39,
+      "version": "7",
+      "when": 1791955477728,
+      "tag": "0039_apply_0039_rate_limits",
+      "breakpoints": true
+    },
+    {
+      "idx": 40,
+      "version": "7",
+      "when": 1791964826791,
+      "tag": "0040_apply_0040_us_pay_runs",
+      "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "7",
+      "when": 1792005056472,
+      "tag": "0041_apply_0041_platform_feedback",
+      "breakpoints": true
+    },
+    {
+      "idx": 42,
+      "version": "7",
+      "when": 1792005154168,
+      "tag": "0042_apply_0042_tier_plans_and_ai_usage",
+      "breakpoints": true
+    },
+    {
+      "idx": 43,
+      "version": "7",
+      "when": 1792005310260,
+      "tag": "0043_apply_0043_ai_memory_and_import_connections",
+      "breakpoints": true
+    },
+    {
+      "idx": 44,
+      "version": "7",
+      "when": 1792005423075,
+      "tag": "0044_apply_0044_products_with_stock",
+      "breakpoints": true
+    },
+    {
+      "idx": 45,
+      "version": "7",
+      "when": 1792086610560,
+      "tag": "0045_0045_copy_documents_and_feedback_limit",
+      "breakpoints": true
+    },
+    {
+      "idx": 46,
+      "version": "7",
+      "when": 1792104285614,
+      "tag": "0046_apply_0046_module_overview",
+      "breakpoints": true
+    },
+    {
+      "idx": 47,
+      "version": "7",
+      "when": 1792104361731,
+      "tag": "0047_apply_0047_sidebar_eligibility_sponsors_approvals",
+      "breakpoints": true
+    },
+    {
+      "idx": 48,
+      "version": "7",
+      "when": 1792109253644,
+      "tag": "0048_apply_0048_platform_insights",
+      "breakpoints": true
+    },
+    {
+      "idx": 49,
+      "version": "7",
+      "when": 1792117703119,
+      "tag": "0049_apply_0049_onboarding_agent_schedules_feedback",
+      "breakpoints": true
+    }
+  ]
+}

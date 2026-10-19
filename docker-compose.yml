@@ -1,0 +1,32 @@
+# Self-hosted Inuberry: the app plus the optional one-click updater.
+# Full guide: https://crm.inuberry.com/docs/self-hosting
+#
+#   cp deploy/selfhost.env.example .env   # fill it in
+#   docker compose up -d
+#
+# INUBERRY_IMAGE is the published image. To build it yourself from this repository instead:
+#   docker build -t inuberry:local . && INUBERRY_IMAGE=inuberry INUBERRY_VERSION=local docker compose up -d
+services:
+  app:
+    image: ${INUBERRY_IMAGE:-inuberry}:${INUBERRY_VERSION:-latest}
+    env_file: .env
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      PORT: "3000"
+    labels:
+      - inuberry.role=app
+    restart: unless-stopped
+
+  # Installs a new version when the platform owner clicks "Update now". Delete it to update by hand.
+  updater:
+    image: ${INUBERRY_IMAGE:-inuberry}:${INUBERRY_VERSION:-latest}
+    command: ["node", "/app/deploy/updater.mjs"]
+    user: "0"
+    environment:
+      UPDATER_TOKEN: ${UPDATER_TOKEN}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:8080/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+    restart: unless-stopped

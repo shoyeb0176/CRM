@@ -1,0 +1,6 @@
+# Shell scripts must keep LF endings, even on Windows checkouts (bash rejects CRLF).
+*.sh text eol=lf
+# Scripts that run inside the Linux image must keep Unix line endings.
+*.sh text eol=lf
+deploy/inuberry text eol=lf
+deploy/*.mjs text eol=lf
